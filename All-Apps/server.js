@@ -3,11 +3,12 @@ const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const router = require("./router/Users");
-
+const postrouter = require("./router/Posts");
 
 app.use(cors());
 app.use(express.json()); // لإضافة تحليل جسم الطلب
 app.use("/user",router);
+app.use("/post",postrouter)
 // استخدام الروتر
 
 // CONNECT MONGODB
