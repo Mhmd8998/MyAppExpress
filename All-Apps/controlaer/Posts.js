@@ -17,7 +17,7 @@ module.exports= {
     },
     getAllPosts: async (req,res) => {
         try{
-            const posts = await PostModel.find();
+            const posts = await PostModel.find().populate('author');
             return res.json(posts);
         }catch (err) {
             res.status(500).json({ message: err.message });
