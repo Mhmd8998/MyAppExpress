@@ -1,15 +1,19 @@
 const mongoose = require('mongoose');
 const UserModel = require('../models/Users'); // تأكد من أن المسار صحيح
+const bcrypt = require("bcryptjs");
 
 module.exports = {
     insertUser: async (req, res) => {
         try {
             const username = req.body.name;
-            const age = req.body.age;
+            const password = req.body.password;
             const email = req.body.email;
+
+	   const hashPass = bcrypt.hashSync(password,10);
+
             const createuser = new UserModel({
                 name: username,
-                age: age,
+                password: hashPass,
                 email: email
             });
             await createuser.save();
