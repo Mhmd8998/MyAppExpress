@@ -14,5 +14,13 @@ module.exports= {
         } catch (err) {
             res.status(500).json({ message: err.message });
         }
+    },
+    getAllPosts: async (req,res) => {
+        try{
+            const posts = await PostModel.find();
+            return res.json(posts);
+        }catch (err) {
+            res.status(500).json({ message: err.message });
+        }
     }
 };
