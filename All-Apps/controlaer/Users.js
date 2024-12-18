@@ -11,10 +11,12 @@ module.exports = {
             res.status(500).json({ message: err.message });
         }
     },
+
     updateUser: async (req, res) => {
         try {
-            const userId = req.params.name; // استخدم معرف المستخدم بدلاً من الاسم
-            const updatedUser = await UserModel.findByIdAndUpdate(userId, req.body, { new: true });
+            const userName = req.params.name; // استخدام اسم المستخدم بدلاً من معرف المستخدم
+
+            const updatedUser = await UserModel.findOneAndUpdate({ name: userName }, req.body, { new: true });
             if (!updatedUser) {
                 return res.status(404).json({ message: 'User not found' });
             }
@@ -23,14 +25,16 @@ module.exports = {
             res.status(500).json({ message: err.message });
         }
     },
+
     deleteUser: async (req, res) => {
         try {
-            const userId = req.params.name; // استخدم معرف المستخدم بدلاً من الاسم
-            const deleteUser = await UserModel.findByIdAndDelete({userId});
+            const userName = req.params.name; // استخدام اسم المستخدم بدلاً من معرف المستخدم
+
+            const deleteUser = await UserModel.findOneAndDelete({ name: userName });
             if (!deleteUser) {
                 return res.status(404).json({ message: 'User not found' });
             }
-            return res.send("User deleted successfully");
+            return res.status(200).json({ message: "User deleted successfully" });
         } catch (err) {
             res.status(500).json({ message: err.message });
         }
