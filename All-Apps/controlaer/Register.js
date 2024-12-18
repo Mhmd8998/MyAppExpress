@@ -2,28 +2,28 @@ const jwt = require("jsonwebtoken");
 const UserModel = require("../models/Users");
 const bcrypt = require("bcryptjs");
 
-
-module.exports= {
-  insertUser: async (req, res) => {
+module.exports = {
+    insertUser: async (req, res) => {
         try {
-            const username = req.body.name;
-            const password = req.body.password;
-            const email = req.body.email;
-            const chickUser = await UserModel.findOne({username})
-            if(chickUser){
-              return res.json({message:"Already exists "})
-            }else{
-	        const hashPass = bcrypt.hashSync(password,10);
+            const { name, password, email } = req.body;
 
-                const createuser = new UserModel({
-                    name: username,
+            // التحقق من وجود المستخدم بناءً على الاسم والبريد الإلكتروني
+            const existingUser = await UserModel.findOne({ $or: [{ name }, { email }] });
+
+            if (existingUser) {
+                return res.status(400).json({ message: "User with this name or email already exists." });
+            } else {
+                const hashPass = bcrypt.hashSync(password, 10);
+
+                const createUser = new UserModel({
+                    name,
                     password: hashPass,
-                    email: email
-                 });
-                await createuser.save();
-                return res.json(createuser);
-	    }
-	    
+                    email
+                });
+
+                await createUser.save();
+                return res.status(201).json({ message: "User created successfully", user: createUser });
+            }
         } catch (err) {
             res.status(500).json({ message: err.message });
         }
