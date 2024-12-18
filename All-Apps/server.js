@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json()); // لإضافة تحليل جسم الطلب
 app.use("/user",router);
 app.use("/post",postrouter);
-app.use("/register",registerrouter");
+app.use("/register",registerrouter);
 // استخدام الروتر
 
 // CONNECT MONGODB
