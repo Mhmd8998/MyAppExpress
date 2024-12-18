@@ -12,16 +12,18 @@ module.exports= {
             const chickUser = await UserModel.findOne({username})
             if(chickUser){
               return res.json({message:"Already exists "})
-            }
-	          const hashPass = bcrypt.hashSync(password,10);
+            }else{
+	        const hashPass = bcrypt.hashSync(password,10);
 
-            const createuser = new UserModel({
-                name: username,
-                password: hashPass,
-                email: email
-            });
-            await createuser.save();
-            return res.json(createuser);
+                const createuser = new UserModel({
+                    name: username,
+                    password: hashPass,
+                    email: email
+                 });
+                await createuser.save();
+                return res.json(createuser);
+	    }
+	    
         } catch (err) {
             res.status(500).json({ message: err.message });
         }
