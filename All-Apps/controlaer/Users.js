@@ -13,7 +13,7 @@ module.exports = {
     },
     updateUser: async (req, res) => {
         try {
-            const userId = req.params.id; // استخدم معرف المستخدم بدلاً من الاسم
+            const userId = req.params.name; // استخدم معرف المستخدم بدلاً من الاسم
             const updatedUser = await UserModel.findByIdAndUpdate(userId, req.body, { new: true });
             if (!updatedUser) {
                 return res.status(404).json({ message: 'User not found' });
@@ -25,7 +25,7 @@ module.exports = {
     },
     deleteUser: async (req, res) => {
         try {
-            const userId = req.params.id; // استخدم معرف المستخدم بدلاً من الاسم
+            const userId = req.params.name; // استخدم معرف المستخدم بدلاً من الاسم
             const deleteUser = await UserModel.findByIdAndDelete(userId);
             if (!deleteUser) {
                 return res.status(404).json({ message: 'User not found' });
