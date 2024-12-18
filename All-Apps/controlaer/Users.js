@@ -26,7 +26,7 @@ module.exports = {
     deleteUser: async (req, res) => {
         try {
             const userId = req.params.name; // استخدم معرف المستخدم بدلاً من الاسم
-            const deleteUser = await UserModel.findByIdAndDelete(userId);
+            const deleteUser = await UserModel.findByIdAndDelete({userId});
             if (!deleteUser) {
                 return res.status(404).json({ message: 'User not found' });
             }
