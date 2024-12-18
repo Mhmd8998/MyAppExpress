@@ -3,26 +3,6 @@ const UserModel = require('../models/Users'); // تأكد من أن المسار
 const bcrypt = require("bcryptjs");
 
 module.exports = {
-    insertUser: async (req, res) => {
-        try {
-            const username = req.body.name;
-            const password = req.body.password;
-            const email = req.body.email;
-
-	   const hashPass = bcrypt.hashSync(password,10);
-
-            const createuser = new UserModel({
-                name: username,
-                password: hashPass,
-                email: email
-            });
-            await createuser.save();
-            return res.json(createuser);
-        } catch (err) {
-            res.status(500).json({ message: err.message });
-        }
-    },
-
     getAllUsers: async (req, res) => {
         try {
             const users = await UserModel.find();
@@ -31,7 +11,6 @@ module.exports = {
             res.status(500).json({ message: err.message });
         }
     },
-
     updateUser: async (req, res) => {
         try {
             const userId = req.params.id; // استخدم معرف المستخدم بدلاً من الاسم
@@ -44,7 +23,6 @@ module.exports = {
             res.status(500).json({ message: err.message });
         }
     },
-
     deleteUser: async (req, res) => {
         try {
             const userId = req.params.id; // استخدم معرف المستخدم بدلاً من الاسم
