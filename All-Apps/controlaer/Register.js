@@ -28,4 +28,20 @@ module.exports = {
             res.status(500).json({ message: err.message });
         }
     },
+    login: async (req,res) => {
+        
+        const {name,password} = req.body;
+        const existingUser = await UserModel.findOne({name:name});
+        
+        if(!existingUser){
+            return res.status(404).json({message:"user is not existing"});
+        }
+        const chickPass = bcrypt.compareSync(password,existingUser.password);
+        if(!chickPass){
+            return res.status(404).json({message:"username or password is not fund"});
+        }
+
+        const token = jwt.sign({id:existingUser._id},"SECRET",{expiresIn:"1h"});
+        res.status(201).json({message:"login successfuly",token})
+    }
 }
