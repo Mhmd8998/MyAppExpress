@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const UserModel = require("../models/Users");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 
 module.exports= {
