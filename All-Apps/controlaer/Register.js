@@ -9,7 +9,7 @@ module.exports= {
             const username = req.body.name;
             const password = req.body.password;
             const email = req.body.email;
-            const chickUser = UserModel.findOne({username})
+            const chickUser = await UserModel.findOne({username})
             if(chickUser){
               return res.json({message:"Already exists "})
             }
